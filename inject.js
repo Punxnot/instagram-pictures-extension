@@ -1,4 +1,5 @@
 (function() {
+  console.log("Hello");
   function getDataUri(url, width, height, callback) {
     var image = new Image();
     image.crossOrigin = "Anonymous";
