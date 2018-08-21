@@ -1,5 +1,6 @@
 (function() {
   console.log("Hello");
+  var currentlySelected;
   function getDataUri(url, width, height, callback) {
     var image = new Image();
     image.crossOrigin = "Anonymous";
@@ -16,12 +17,21 @@
     image.src = url;
   }
 
+  function removeSelectionFromElement(el) {
+    el.style.outline = "none";
+    el.innerHTML = "";
+  }
+
   document.addEventListener("click", function(e) {
+    if (currentlySelected) {
+      removeSelectionFromElement(currentlySelected);
+    }
     var targetElement = e.target;
+    currentlySelected = targetElement;
     if (targetElement.className == "_9AhH0") {
       // Find image tag
       var picElement = targetElement.previousSibling;
-      picElement.style.outline = "6px dotted green";
+      targetElement.style.outline = "6px dotted green";
       var imageUrl = picElement.querySelector('img').getAttribute("src");
       var downloadWidth = targetElement.offsetWidth;
       var downloadHeight = targetElement.offsetHeight;
@@ -42,5 +52,18 @@
         targetElement.appendChild(downloadButton);
       });
     }
-  })
+  });
+
+  document.addEventListener("keydown", function(evt) {
+    evt = evt || window.event;
+    var isEscape = false;
+    if ("key" in evt) {
+      isEscape = (evt.key == "Escape" || evt.key == "Esc");
+    } else {
+      isEscape = (evt.keyCode == 27);
+    }
+    if (isEscape && currentlySelected) {
+      removeSelectionFromElement(currentlySelected);
+    }
+  });
 })();
