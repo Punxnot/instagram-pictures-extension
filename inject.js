@@ -9,7 +9,7 @@
       canvas.width = width;
       canvas.height = height;
       canvas.getContext('2d').drawImage(this, 0, 0, this.width, this.height, 0, 0, width, height);
-      callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+      // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
       callback(canvas.toDataURL('image/png'));
     };
 
