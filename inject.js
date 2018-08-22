@@ -1,5 +1,4 @@
 (function() {
-  console.log("Hello");
   var currentlySelected;
   function getDataUri(url, width, height, callback) {
     var image = new Image();
@@ -31,7 +30,7 @@
     if (targetElement.className == "_9AhH0") {
       // Find image tag
       var picElement = targetElement.previousSibling;
-      targetElement.style.outline = "6px dotted green";
+      targetElement.style.outline = "3px dashed green";
       var imageUrl = picElement.querySelector('img').getAttribute("src");
       var downloadWidth = targetElement.offsetWidth;
       var downloadHeight = targetElement.offsetHeight;
@@ -48,7 +47,9 @@
         downloadButton.style.padding = "20px";
         downloadButton.style.cursor = "pointer";
         downloadButton.setAttribute("href", dataUri);
-        downloadButton.setAttribute("download", "myFile01.png");
+        var nameElements = imageUrl.split("/");
+        var fileName = nameElements[nameElements.length - 1];
+        downloadButton.setAttribute("download", fileName);
         targetElement.appendChild(downloadButton);
       });
     }
