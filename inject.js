@@ -17,40 +17,53 @@
   }
 
   function removeSelectionFromElement(el) {
-    el.style.outline = "none";
+    el.style.border = "none";
     el.innerHTML = "";
   }
 
+  function generateButton(text, posX) {
+    var button = document.createElement('a');
+    button.innerHTML = text;
+    button.style.position = "absolute";
+    button.style.top = "0px";
+    button.style[posX] = "0px";
+    button.style.backgroundColor = "#282B2A";
+    button.style.color = "#fafafa";
+    button.style.padding = "20px";
+    button.style.cursor = "pointer";
+    return button;
+  }
+
   document.addEventListener("click", function(e) {
+    // Unselect any selected pictures
     if (currentlySelected) {
       removeSelectionFromElement(currentlySelected);
+      currentlySelected = null;
     }
+    // If clicked on picture select it
     var targetElement = e.target;
-    currentlySelected = targetElement;
     if (targetElement.className == "_9AhH0") {
+      currentlySelected = targetElement;
       // Find image tag
       var picElement = targetElement.previousSibling;
-      targetElement.style.outline = "3px dashed green";
+      targetElement.style.border = "3px dashed #00cc99";
       var imageUrl = picElement.querySelector('img').getAttribute("src");
       var downloadWidth = targetElement.offsetWidth;
       var downloadHeight = targetElement.offsetHeight;
 
       getDataUri(imageUrl, downloadWidth, downloadHeight, function(dataUri) {
         // Create download button
-        var downloadButton = document.createElement('a');
-        downloadButton.innerHTML = "Download this image";
-        downloadButton.style.position = "absolute";
-        downloadButton.style.top = "0px";
-        downloadButton.style.right = "0px";
-        downloadButton.style.backgroundColor = "#000000";
-        downloadButton.style.color = "#ffffff";
-        downloadButton.style.padding = "20px";
-        downloadButton.style.cursor = "pointer";
+        var downloadButton = generateButton("Download", "right");
         downloadButton.setAttribute("href", dataUri);
         var nameElements = imageUrl.split("/");
         var fileName = nameElements[nameElements.length - 1];
         downloadButton.setAttribute("download", fileName);
         targetElement.appendChild(downloadButton);
+        // Create open button
+        var openButton = generateButton("Open", "left");
+        openButton.setAttribute("href", imageUrl);
+        openButton.setAttribute("target", "_blank");
+        targetElement.appendChild(openButton);
       });
     }
   });
