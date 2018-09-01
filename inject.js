@@ -10,7 +10,7 @@
       canvas.height = height;
       canvas.getContext('2d').drawImage(this, 0, 0, this.width, this.height, 0, 0, width, height);
       // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
-      callback(canvas.toDataURL('image/png'));
+      callback(canvas.toDataURL('image/jpg'));
     };
 
     image.src = url;
@@ -57,6 +57,7 @@
         downloadButton.setAttribute("href", dataUri);
         var nameElements = imageUrl.split("/");
         var fileName = nameElements[nameElements.length - 1];
+        fileName = fileName.replace("jpg", "png")
         downloadButton.setAttribute("download", fileName);
         targetElement.appendChild(downloadButton);
         // Create open button
