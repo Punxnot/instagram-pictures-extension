@@ -9,7 +9,6 @@
       canvas.width = width;
       canvas.height = height;
       canvas.getContext('2d').drawImage(this, 0, 0, this.width, this.height, 0, 0, width, height);
-      // callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
       callback(canvas.toDataURL('image/jpg'));
     };
 
@@ -25,12 +24,11 @@
     var button = document.createElement('a');
     button.innerHTML = text;
     button.style.position = "absolute";
-    button.style.top = "0px";
-    button.style[posX] = "0px";
+    button.style.top = "0";
+    button.style[posX] = "0";
     button.style.backgroundColor = "#282B2A";
     button.style.color = "#fafafa";
-    button.style.padding = "20px";
-    button.style.cursor = "pointer";
+    button.style.padding = "10px";
     return button;
   }
 
@@ -46,7 +44,7 @@
       currentlySelected = targetElement;
       // Find image tag
       var picElement = targetElement.previousSibling;
-      targetElement.style.border = "3px dashed #00cc99";
+      targetElement.style.border = "2px dashed #fff";
       var imageUrl = picElement.querySelector('img').getAttribute("src");
       var downloadWidth = targetElement.offsetWidth;
       var downloadHeight = targetElement.offsetHeight;
@@ -55,15 +53,18 @@
         // Create download button
         var downloadButton = generateButton("Download", "right");
         downloadButton.setAttribute("href", dataUri);
+        downloadButton.setAttribute("title", "Download image");
         var nameElements = imageUrl.split("/");
-        var fileName = nameElements[nameElements.length - 1];
+        var fileName = nameElements[nameElements.length - 1].split("?")[0];
         fileName = fileName.replace("jpg", "png")
         downloadButton.setAttribute("download", fileName);
         targetElement.appendChild(downloadButton);
+
         // Create open button
         var openButton = generateButton("Open", "left");
         openButton.setAttribute("href", imageUrl);
         openButton.setAttribute("target", "_blank");
+        openButton.setAttribute("title", "Open image in a new tab");
         targetElement.appendChild(openButton);
       });
     }

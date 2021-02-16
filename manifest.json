@@ -1,7 +1,7 @@
 {
   "name": "InstaLoad",
-  "version": "0.0.1",
-  "manifest_version": 2,
+  "version": "0.0.2",
+  "manifest_version": 3,
   "description": "Download Instagram pictures",
   "background": {
     "scripts": [
@@ -17,7 +17,7 @@
       "128": "images/icon128.png"
     }
   },
-  "permissions": ["activeTab", "declarativeContent"],
+  "permissions": [],
   "content_scripts": [
     {
       "matches": ["*://*.instagram.com/*"],
